@@ -43,6 +43,10 @@ const userSchema = new Schema<IUser, UserModal>(
       select: 0,
       minlength: 8,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
     location: {
       type: String,
       required: false,

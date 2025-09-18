@@ -5,6 +5,11 @@ const categorySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  categoryStatus: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 export const Category = mongoose.model("Category", categorySchema);

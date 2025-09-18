@@ -19,6 +19,7 @@ export type IUser = {
     location?: string;
     profile?: string;
     verified: boolean;
+    isDeleted: boolean;
     authentication?: IAuthenticationProps;
 }
 

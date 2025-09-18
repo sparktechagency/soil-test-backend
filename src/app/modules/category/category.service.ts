@@ -18,14 +18,17 @@ const createCategoryIntoDB = async (data: ICategory) => {
 };
 
 const getAllCategoryFromDB = async (query: Record<string, unknown>) => {
-  const result = new QueryBuilder(Category.find().lean(), query)
+  const queryBuilder = new QueryBuilder(
+    Category.find({ categoryStatus: true }).lean(),
+    query
+  )
     .filter()
     .sort()
     .paginate()
     .fields()
     .search(["title"]);
-  const data = result.modelQuery;
-  const paginationInfo = await result.getPaginationInfo();
+  const data = await queryBuilder.modelQuery.exec();
+  const paginationInfo = await queryBuilder.getPaginationInfo();
   return { data, paginationInfo };
 };
 

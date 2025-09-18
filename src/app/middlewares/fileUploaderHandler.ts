@@ -29,6 +29,9 @@ const fileUploadHandler = () => {
                 case 'image':
                     uploadDir = path.join(baseUploadDir, 'images');
                 break;
+                case 'document':
+                    uploadDir = path.join(baseUploadDir, 'documents');
+                break;
                 default:
                     throw new ApiError(StatusCodes.BAD_REQUEST, 'File is not supported');
             }
@@ -54,23 +57,31 @@ const fileUploadHandler = () => {
     const filterFilter = (req: Request, file: any, cb: FileFilterCallback) => {
 
         // console.log("file handler",file)
-        if (file.fieldname === 'image') {
+        if (file.fieldname === 'image' || file.fieldname === 'document') {
             if (
                 file.mimetype === 'image/jpeg' ||
                 file.mimetype === 'image/png' ||
-                file.mimetype === 'image/jpg'
+                file.mimetype === 'image/jpg' ||
+                file.mimetype === 'application/pdf'
+                || file.mimetype === 'application/msword'
+                || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                || file.mimetype === 'application/vnd.ms-excel'
+                || file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             ) {
                 cb(null, true);
             } else {
                 cb(new ApiError(StatusCodes.BAD_REQUEST, 'Only .jpeg, .png, .jpg file supported'))
             }
-        }else {
+        }   else {
             cb(new ApiError(StatusCodes.BAD_REQUEST, 'This file is not supported'))
         }
     };
 
     const upload = multer({ storage: storage, fileFilter: filterFilter})
-    .fields([{ name: 'image', maxCount: 3 } ]);
+    .fields([
+        { name: 'image', maxCount: 3 },
+        { name: 'document', maxCount: 50 },
+    ]);
     return upload;
 
 };
