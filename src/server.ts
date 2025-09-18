@@ -22,7 +22,7 @@ async function main() {
 
         // remove cluster fromt his code
         // create super admin
-        // seedSuperAdmin();
+        seedSuperAdmin();
 
         mongoose.connect(config.database_url as string);
         logger.info(colors.green('🚀 Database connected successfully'));

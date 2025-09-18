@@ -10,6 +10,7 @@ const superUser = {
     role: USER_ROLES.SUPER_ADMIN,
     email: config.admin.email,
     password: config.admin.password,
+    confirm_password: config.admin.confirm_password,
     verified: true,
 };
 
