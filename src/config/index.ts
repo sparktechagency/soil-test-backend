@@ -7,11 +7,11 @@ export default{
     port: process.env.PORT,
     database_url: process.env.DATABASE_URL,
     node_env: process.env.NODE_ENV,
-    bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
+    bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS || 12,
     jwt: {
-        jwt_secret: process.env.JWT_SECRET,
-        jwt_expire_in: process.env.JWT_EXPIRE_IN,
-        jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
+        jwt_secret: process.env.JWT_SECRET!,
+        jwt_expire_in: process.env.JWT_EXPIRE_IN!,
+        jwtRefreshSecret: process.env.JWT_REFRESH_SECRET!,
         jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN
     },
     stripe:{
