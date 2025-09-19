@@ -27,6 +27,10 @@ const documentSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export const Document = mongoose.model("Document", documentSchema);

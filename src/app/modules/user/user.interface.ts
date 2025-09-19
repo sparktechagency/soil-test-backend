@@ -15,7 +15,7 @@ export type IUser = {
     confirmPassword: string;
     contact?: string;
     appId: string;
-    role: USER_ROLES;
+    role?: USER_ROLES;
     location?: string;
     profile?: string;
     verified: boolean;

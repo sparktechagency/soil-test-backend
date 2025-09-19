@@ -7,4 +7,5 @@ export interface IDocument {
   document: string[];
   category: Types.ObjectId;
   user: Types.ObjectId;
+  isActive: boolean;
 }

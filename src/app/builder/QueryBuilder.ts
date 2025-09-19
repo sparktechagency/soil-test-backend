@@ -30,31 +30,21 @@ class QueryBuilder<T> {
   //filtering
   filter() {
     const queryObj = { ...this.query };
-    const excludeFields = ["searchTerm", "sort", "page", "limit", "fields"];
+    const excludeFields = [
+      "searchTerm",
+      "sort",
+      "page",
+      "limit",
+      "fields",
+      "withLocked",
+      "showHidden",
+      "download",
+    ];
     excludeFields.forEach((el) => delete queryObj[el]);
 
-    // Handle price range specially
-    if (queryObj["price"]) {
-      const priceObj = queryObj["price"] as { min?: number; max?: number };
-      const priceFilter: Record<string, unknown> = {};
-
-      if (priceObj.min !== undefined) {
-        priceFilter.$gte = priceObj.min;
-      }
-      if (priceObj.max !== undefined) {
-        priceFilter.$lte = priceObj.max;
-      }
-
-      this.modelQuery = this.modelQuery.find({
-        ...queryObj,
-        // price: priceFilter,
-      });
-
-      delete queryObj["price"];
-    } else {
-      this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
-    }
-
+    this.modelQuery = this.modelQuery.find(
+      cleanObject(queryObj) as FilterQuery<T>
+    );
     return this;
   }
 
@@ -91,7 +81,7 @@ class QueryBuilder<T> {
     this.modelQuery = this.modelQuery.populate(
       populateFields.map((field) => ({
         path: field,
-        select: selectFields[field],
+        select: selectFields?.[field] || "",
       }))
     );
     return this;
@@ -113,6 +103,31 @@ class QueryBuilder<T> {
       totalPage,
     };
   }
+}
+function cleanObject(obj: Record<string, any>) {
+  const cleaned: Record<string, any> = {};
+
+  for (const key in obj) {
+    const value = obj[key];
+
+    // Skip null, undefined, empty string, empty array, or empty object
+    if (
+      value !== null &&
+      value !== undefined &&
+      value !== "" &&
+      value !== "undefined" &&
+      !(Array.isArray(value) && value.length === 0) &&
+      !(
+        typeof value === "object" &&
+        !Array.isArray(value) &&
+        Object.keys(value).length === 0
+      )
+    ) {
+      cleaned[key] = value;
+    }
+  }
+
+  return cleaned;
 }
 
 export default QueryBuilder;
