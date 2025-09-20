@@ -1,5 +1,5 @@
-import { model, Schema } from 'mongoose';
-import { IRule, RuleModel } from './rule.interface';
+import { model, Schema } from "mongoose";
+import { IRule, RuleModel } from "./rule.interface";
 
 const ruleSchema = new Schema<IRule, RuleModel>({
   content: {
@@ -8,9 +8,9 @@ const ruleSchema = new Schema<IRule, RuleModel>({
   },
   type: {
     type: String,
-    enum: ['privacy', 'terms', 'about'],
+    enum: ["privacy", "terms"],
     select: 0,
   },
 });
 
-export const Rule = model<IRule, RuleModel>('Rule', ruleSchema);
+export const Rule = model<IRule, RuleModel>("Rule", ruleSchema);

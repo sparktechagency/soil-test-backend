@@ -28,7 +28,10 @@ const getAllDocumentFromDB = async (
     .paginate()
     .fields()
     .search(["title"])
-    .populate(["user"], { path: "user", select: "name email" });
+    .populate(["user", "category"], {
+      path: "user category",
+      select: "name email title",
+    });
   const result = await queryBuilder.modelQuery.exec();
   const paginationInfo = await queryBuilder.getPaginationInfo();
   if (!result) {
@@ -83,7 +86,10 @@ const getAllDocumentFromDBForSuperAdmin = async (
     .fields()
     .sort()
     .filter();
-  queryBuilder.populate(["user"], { path: "user", select: "name email" });
+  queryBuilder.populate(["user category"], {
+    path: "user category",
+    select: "name email title",
+  });
   const data = await queryBuilder.modelQuery.exec();
   // filter out documents where user is SUPER_ADMIN or ADMIN
   const filteredData = data.filter(
