@@ -28,10 +28,15 @@ router
     DocumentController.createDocument
   )
   .get(
-    auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.USER),
+    auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
     DocumentController.getAllDocument
   );
-
+router
+  .route("/all")
+  .get(
+    auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+    DocumentController.getAllDocumentForSuperAdmin
+  );
 // with id
 router
   .route("/upload/:id")

@@ -4,6 +4,7 @@ import { IDocument } from "./Document.interface";
 import { Document } from "./Document.model";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { JwtPayload } from "jsonwebtoken";
+import { USER_ROLES } from "../../../enums/user";
 
 const createDocumentIntoDB = async (data: IDocument, user: JwtPayload) => {
   data.user = user.id;
@@ -84,11 +85,19 @@ const getAllDocumentFromDBForSuperAdmin = async (
     .filter();
   queryBuilder.populate(["user"], { path: "user", select: "name email" });
   const data = await queryBuilder.modelQuery.exec();
+  // filter out documents where user is SUPER_ADMIN or ADMIN
+  const filteredData = data.filter(
+    (doc) =>
+      // @ts-ignore
+      (doc.user?.role as string) !== USER_ROLES.SUPER_ADMIN &&
+      // @ts-ignore
+      (doc.user?.role as string) !== USER_ROLES.ADMIN
+  );
   const paginationInfo = await queryBuilder.getPaginationInfo();
-  if (data.length === 0) {
+  if (filteredData.length === 0) {
     return { data: [], paginationInfo };
   }
-  return { data, paginationInfo };
+  return { data: filteredData, paginationInfo };
 };
 
 export const DocumentService = {
