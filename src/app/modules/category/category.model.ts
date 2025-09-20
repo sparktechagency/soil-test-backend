@@ -8,7 +8,7 @@ const categorySchema = new mongoose.Schema({
   categoryStatus: {
     type: Boolean,
     required: true,
-    default: false,
+    default: true,
   },
 });
 

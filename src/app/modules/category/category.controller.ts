@@ -59,10 +59,22 @@ const deleteCategory = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+const getAllCategoryForSuperAdmin =  catchAsync(async (req: Request, res: Response) => {
+  const result = await CategoryService.getAllCategoryFromDBForSuperAdmin();
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Category fetched successfully",
+    data: result,
+  });
+});
+
 export const CategoryController = {
   createCategory,
   getAllCategory,
   getSingleCategory,
   updateCategory,
   deleteCategory,
+  getAllCategoryForSuperAdmin,
 };

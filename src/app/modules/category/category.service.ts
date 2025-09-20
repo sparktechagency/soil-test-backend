@@ -18,10 +18,7 @@ const createCategoryIntoDB = async (data: ICategory) => {
 };
 
 const getAllCategoryFromDB = async (query: Record<string, unknown>) => {
-  const queryBuilder = new QueryBuilder(
-    Category.find({ categoryStatus: true }).lean(),
-    query
-  )
+  const queryBuilder = new QueryBuilder(Category.find().lean(), query)
     .filter()
     .sort()
     .paginate()
@@ -63,10 +60,20 @@ const deleteCategoryFromDB = async (id: string) => {
   return result;
 };
 
+// get all category base for super admin
+const getAllCategoryFromDBForSuperAdmin = async () => {
+  const result = await Category.find().lean();
+  if (!result) {
+    return [];
+  }
+  return result;
+};
+
 export const CategoryService = {
   createCategoryIntoDB,
   getAllCategoryFromDB,
   getSingleCategoryFromDB,
   updateCategoryIntoDB,
   deleteCategoryFromDB,
+  getAllCategoryFromDBForSuperAdmin,
 };

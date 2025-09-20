@@ -10,22 +10,30 @@ const router = Router();
 router
   .route("/")
   .post(
-    auth(USER_ROLES.SUPER_ADMIN),
+    auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
     validateRequest(categoryValidation.createCategoryValidation),
     CategoryController.createCategory
   )
   .get(CategoryController.getAllCategory);
 
 router
+  .route("/all")
+  .get(
+    auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+    CategoryController.getAllCategoryForSuperAdmin
+  );
+
+router
   .route("/:id")
   .get(CategoryController.getSingleCategory)
   .patch(
-    auth(USER_ROLES.SUPER_ADMIN),
+    auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
     validateRequest(categoryValidation.updateCategoryValidation),
     CategoryController.updateCategory
   )
-  .delete(auth(USER_ROLES.SUPER_ADMIN), CategoryController.deleteCategory);
-
-
+  .delete(
+    auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+    CategoryController.deleteCategory
+  );
 
 export const CategoryRoutes = router;
