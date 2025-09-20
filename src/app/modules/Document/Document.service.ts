@@ -4,7 +4,6 @@ import { IDocument } from "./Document.interface";
 import { Document } from "./Document.model";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { JwtPayload } from "jsonwebtoken";
-import { USER_ROLES } from "../../../enums/user";
 
 const createDocumentIntoDB = async (data: IDocument, user: JwtPayload) => {
   data.user = user.id;
@@ -28,7 +27,7 @@ const getAllDocumentFromDB = async (
     .paginate()
     .fields()
     .search(["title"])
-    .populate(["category"], { category: "title" });
+    .populate(["user"], { path: "user", select: "name email" });
   const result = await queryBuilder.modelQuery.exec();
   const paginationInfo = await queryBuilder.getPaginationInfo();
   if (!result) {
@@ -73,10 +72,30 @@ const deleteDocumentFromDB = async (id: string, user: JwtPayload) => {
   return result;
 };
 
+// all submittion For Super admin
+const getAllDocumentFromDBForSuperAdmin = async (
+  query: Record<string, unknown>
+) => {
+  const queryBuilder = new QueryBuilder(Document.find().lean(), query)
+    .search(["title"])
+    .paginate()
+    .fields()
+    .sort()
+    .filter();
+  queryBuilder.populate(["user"], { path: "user", select: "name email" });
+  const data = await queryBuilder.modelQuery.exec();
+  const paginationInfo = await queryBuilder.getPaginationInfo();
+  if (data.length === 0) {
+    return { data: [], paginationInfo };
+  }
+  return { data, paginationInfo };
+};
+
 export const DocumentService = {
   createDocumentIntoDB,
   getAllDocumentFromDB,
   getSingleDocumentFromDB,
   updateDocumentIntoDB,
   deleteDocumentFromDB,
+  getAllDocumentFromDBForSuperAdmin,
 };

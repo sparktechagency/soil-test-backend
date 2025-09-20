@@ -71,7 +71,16 @@ const deleteDocument = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
+const getAllDocumentForSuperAdmin = catchAsync(async (req: Request, res: Response) => {
+  const result = await DocumentService.getAllDocumentFromDBForSuperAdmin(req.query);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Document fetched successfully",
+    pagination: result.paginationInfo,
+    data: result.data,
+  });
+});
 
 export const DocumentController = {
   createDocument,
@@ -79,4 +88,5 @@ export const DocumentController = {
   getSingleDocument,
   updateDocument,
   deleteDocument,
+  getAllDocumentForSuperAdmin,
 };
