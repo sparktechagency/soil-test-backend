@@ -41,7 +41,10 @@ const getAllDocumentFromDB = async (
 };
 
 const getSingleDocumentFromDB = async (id: string, user: JwtPayload) => {
-  const result = await Document.findById(id).lean();
+  const result = await Document.findById(id).lean().populate({
+    path: "user category",
+    select: "name email title",
+  });
   if (!result) {
     throw new ApiError(StatusCodes.NOT_FOUND, "Document not found");
   }

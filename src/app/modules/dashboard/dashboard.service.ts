@@ -30,7 +30,6 @@ const userBannedAsAdmin = async (
   payload: { isDeleted: boolean },
   id: string
 ) => {
-  console.log(payload);
   const result = await User.findByIdAndUpdate(
     id,
     { isDeleted: payload.isDeleted },
