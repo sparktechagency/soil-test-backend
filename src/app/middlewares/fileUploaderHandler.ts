@@ -30,7 +30,7 @@ const fileUploadHandler = () => {
                     uploadDir = path.join(baseUploadDir, 'images');
                 break;
                 case 'document':
-                    uploadDir = path.join(baseUploadDir, 'documents');
+                    uploadDir = path.join(baseUploadDir, 'document');
                 break;
                 default:
                     throw new ApiError(StatusCodes.BAD_REQUEST, 'File is not supported');

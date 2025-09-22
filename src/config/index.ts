@@ -1,13 +1,12 @@
 import dotenv from "dotenv";
 import path from "path";
 dotenv.config({ path: path.join(process.cwd(), ".env") });
-
 export default {
   ip_address: process.env.IP,
   port: process.env.PORT,
   database_url: process.env.DATABASE_URL,
   node_env: process.env.NODE_ENV,
-  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS || 12,
+  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
   jwt: {
     jwt_secret: process.env.JWT_SECRET!,
     jwt_expire_in: process.env.JWT_EXPIRE_IN!,

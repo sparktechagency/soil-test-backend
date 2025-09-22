@@ -12,10 +12,10 @@ const createAccount = (values: ICreateAccount) => {
                     <img src="https://res.cloudinary.com/dabd4udau/image/upload/v1758186410/dthxdlsjl6y1xjuorhl8.png" alt="Soil_Test Logo" style="display: block; margin: 0 auto 20px; width:150px" />
 
                     <!-- Greeting -->
-                    <h2 style="color: #277E16; font-size: 24px; margin-bottom: 20px;">Hey, ${values.name}!</h2>
+                    <h2 style="color: #277E16; font-size: 24px; margin-bottom: 20px;">Hey, ${values.name || values.email}!</h2>
 
                     <!-- Verification Instructions -->
-                    <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">Thank you for signing up for Servi. Please verify your email address to activate your account.</p>
+                    <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">Thank you for signing up for Soil Test. Please verify your email address to activate your account.</p>
 
                     <!-- OTP Section -->
                     <div style="text-align: center;">
@@ -25,8 +25,8 @@ const createAccount = (values: ICreateAccount) => {
                     </div>
 
                     <!-- Footer -->
-                    <p style="color: #999; font-size: 12px; text-align: center; margin-top: 30px;">If you did not sign up for Servi, please ignore this email.</p>
-                    <p style="color: #999; font-size: 12px; text-align: center;">&copy; 2024 Servi. All rights reserved.</p>
+                    <p style="color: #999; font-size: 12px; text-align: center; margin-top: 30px;">If you did not sign up for Soil Test, please ignore this email.</p>
+                    <p style="color: #999; font-size: 12px; text-align: center;">&copy; 2024 Soil Test. All rights reserved.</p>
 
                 </div>
             </body>
