@@ -32,6 +32,7 @@ router.delete(
   "/users/:id",
   auth(USER_ROLES.ADMIN, USER_ROLES.SUPER_ADMIN),
   dashboardController.deleteUserFromDBAsaAdmin
+  // 
 );
 
 export const DashboardRoutes = router;
