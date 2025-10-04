@@ -1,10 +1,9 @@
 import { StatusCodes } from "http-status-codes";
-import { IPackage } from "../app/modules/package/package.interface";
 import stripe from "../config/stripe";
 import ApiError from "../errors/ApiErrors";
 import config from "../config";
 
-export const createSubscriptionProduct = async ( payload: Partial<IPackage>): Promise<{ productId: string; paymentLink: string } | null> => {
+export const createSubscriptionProduct = async ( payload: Partial<any>): Promise<{ productId: string; paymentLink: string } | null> => {
 
     // Create Product in Stripe
     const product = await stripe.products.create({
