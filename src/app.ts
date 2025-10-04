@@ -13,7 +13,12 @@ app.use(Morgan.errorHandler);
 
 
 //body parser
-app.use(cors());
+app.use(cors(
+    {
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    }
+));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -35,7 +40,7 @@ app.use(session({
 //router
 app.use('/api/v1', router);
 
-app.get("/", (req: Request, res: Response)=>{
+app.get("/", (req: Request, res: Response) => {
     res.send("Hey Backend, How can I assist you ");
 })
 
@@ -43,7 +48,7 @@ app.get("/", (req: Request, res: Response)=>{
 app.use(globalErrorHandler);
 
 // handle not found route
-app.use((req: Request, res: Response)=>{
+app.use((req: Request, res: Response) => {
     res.status(StatusCodes.NOT_FOUND).json({
         success: false,
         message: "Not Found",
