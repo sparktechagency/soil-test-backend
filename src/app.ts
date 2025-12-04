@@ -18,6 +18,7 @@ app.use(
       "https://admin.agritecint.com",
       "https://user.agritecint.com",
       "http://localhost:3000",
+      "http://10.10.7.44:3001",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
